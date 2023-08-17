@@ -8,6 +8,7 @@ import flash from 'connect-flash';
 import helmet from 'helmet';
 import { Request, Response } from 'express';
 import session from 'express-session';
+import homeRoutes from './routes/home';
 
 declare module 'express-session' {
   export interface SessionData {
@@ -54,6 +55,7 @@ class App {
     this.app.get('/404', (req: Request, res: Response) => {
       return res.render('layouts/main', { cssPath: '/css/404.css', page: '../404.ejs' });
     });
+    this.app.use(homeRoutes);
   }
 }
 
