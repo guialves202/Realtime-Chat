@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+  username String
+  password String
+  role Role @default(USER)
+  word_records WordRecord[]
+
+  @@map("users")
+}
+
+model ForbiddenWord {
+  id String @id @default(uuid())
+  word String
+  word_records WordRecord[]
+
+  @@map("forbiddenWords")
+}
+
+model WordRecord {
+  id String @id @default(uuid())
+  word String
+  userId String
+  createdAt DateTime @default(now())
+  user User @relation(fields: [userId], references: [id])
+  forbiddenWord ForbiddenWord @relation(fields: [word], references: [id])
+
+  @@map("wordRecords")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
