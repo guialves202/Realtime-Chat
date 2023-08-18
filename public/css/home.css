@@ -3,7 +3,7 @@ body {
     overflow: hidden;
 }
 
-header {
+.container {
   color: white;
   display: flex;
   flex-direction: column;
@@ -17,14 +17,14 @@ header {
 }
 
 .background img {
-    filter: brightness(70%);
+    filter: brightness(30%);
     position: absolute;
     top: -20%;
     left: -10%;
     z-index: 2;
 }
 
-header .nav {
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -32,7 +32,7 @@ header .nav {
     z-index: 3;
 }
 
-header .nav a {
+header a {
     color: white;
 }
 
@@ -43,7 +43,7 @@ header .nav a {
     border-radius: 4px;
 }
 
-header .header-content {
+main {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -51,56 +51,55 @@ header .header-content {
     z-index: 3;
 }
 
-header .header-img {
+.main-img {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.header-img img {
+.main-img img {
     max-width: 40vw;
     z-index: 3;
     animation: load-content-right 3s;
+    transition: transform 1s;
 }
 
-.header-text h1 {
-    font-size: 4rem;
-    animation: load-content-left 1.2s;
-    display: inline-block;
-    margin-bottom: 1.2rem;
-}
-
-.header-text h3 {
-    animation: load-content-left 1s;
-}
-
-.header-text a {
-    animation: load-content-left .8s;
-}
-
-.header-text {
+.main-text {
     display: flex;
     align-items: start;
     justify-content: space-between;
     flex-direction: column;
-    row-gap: 1.2rem;
+    row-gap: 1.5rem;
 }
 
-.header-text h1 span {
+.main-text h1 {
+    font-size: 5rem;
+    animation: load-content-left 1.2s;
+    display: block;
+    margin-bottom: 2rem;
+    letter-spacing: -2px;
+}
+
+.main-text h3 {
+    animation: load-content-left 1s;
+    font-weight: 500;
+    font-size: 1.6rem;
+}
+
+.main-text a {
+    animation: load-content-left .8s;
+    font-size: 1.1rem;
+}
+
+.main-text h1 span {
     overflow: hidden;
     color: purple;
     border-right: .1em solid purple;
     white-space: nowrap;
-    animation: typing 3.5s steps(40, end), blinking .8s step-end infinite;
+    animation: typing 2.5s steps(30, end), blinking .8s step-end infinite;
     max-width: fit-content;
-}
-
-.header-text h3 {
-    font-size: 1.5rem;
-}
-
-main {
-    height: 500px;
+    display: block;
+    line-height: 1em;
 }
 
 @keyframes load-content-left {
@@ -126,9 +125,19 @@ main {
 @keyframes typing {
     from { width: 0 }
     to { width: 100% }
-  }
+}
   
 @keyframes blinking {
     from, to { border-color: transparent }
     50% { border-color: purple; }
-  }
+}
+
+@keyframes grow-size {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(120%);
+    }
+}
