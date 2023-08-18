@@ -93,7 +93,6 @@ header .header-img {
     white-space: nowrap;
     animation: typing 3.5s steps(40, end), blinking .8s step-end infinite;
     max-width: fit-content;
-    line-height: 1em;
 }
 
 .header-text h3 {
