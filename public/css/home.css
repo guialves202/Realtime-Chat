@@ -1,10 +1,27 @@
+body {
+    background-color: rgb(2, 1, 17);
+    overflow: hidden;
+}
+
 header {
-  background-image: linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180));
-  background-repeat: no-repeat;
   color: white;
   display: flex;
   flex-direction: column;
-  row-gap: 1rem;
+  row-gap: 3rem;
+  overflow: hidden;
+}
+
+.background {
+    z-index: 2;
+    position: absolute;
+}
+
+.background img {
+    filter: brightness(70%);
+    position: absolute;
+    top: -20%;
+    left: -10%;
+    z-index: 2;
 }
 
 header .nav {
@@ -12,32 +29,107 @@ header .nav {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
+    z-index: 3;
+}
+
+header .nav a {
+    color: white;
+}
+
+.btn-primary {
+    color: white;
+    background-color: #007bff;
+    padding: 8px 15px;
+    border-radius: 4px;
 }
 
 header .header-content {
-    display: grid;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 5rem;
+    z-index: 3;
 }
 
+header .header-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .header-img img {
-    width: 500px;
+    max-width: 40vw;
+    z-index: 3;
+    animation: load-content-right 3s;
 }
 
 .header-text h1 {
     font-size: 4rem;
-    max-width: 600px;
+    animation: load-content-left 1.2s;
+    display: inline-block;
+    margin-bottom: 1.2rem;
+}
+
+.header-text h3 {
+    animation: load-content-left 1s;
+}
+
+.header-text a {
+    animation: load-content-left .8s;
+}
+
+.header-text {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    flex-direction: column;
+    row-gap: 1.2rem;
 }
 
 .header-text h1 span {
-    background-image: linear-gradient(60deg,black, purple);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    overflow: hidden;
+    color: purple;
+    border-right: .1em solid purple;
+    white-space: nowrap;
+    animation: typing 3.5s steps(40, end), blinking .8s step-end infinite;
+    max-width: fit-content;
+    line-height: 1em;
 }
 
 .header-text h3 {
     font-size: 1.5rem;
 }
+
+main {
+    height: 500px;
+}
+
+@keyframes load-content-left {
+    0% {
+        transform: translateX(-300%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes load-content-right {
+    0% {
+        transform: translateX(300%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  
+@keyframes blinking {
+    from, to { border-color: transparent }
+    50% { border-color: purple; }
+  }
