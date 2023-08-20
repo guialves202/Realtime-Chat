@@ -22,6 +22,11 @@ header a {
     color: white;
 }
 
+header div:last-child {
+  display: flex;
+  column-gap: 2rem;
+}
+
 .btn-primary {
     color: white;
     background-color: #007bff;
@@ -30,6 +35,7 @@ header a {
     border: none;
     cursor: pointer;
     transition: filter .3s;
+    font-size: .9rem;
 }
 
 .btn-primary:hover {
@@ -110,10 +116,18 @@ main {
 
 .messages {
   color: white;
-  background-color: #555555da;
+  background-color: #222;
   border-radius: 10px;
   padding: 5px;
   word-break: break-word;
+}
+
+.messages small {
+  margin-left: .7rem;
+}
+
+.messages p {
+  margin-top: 5px;
 }
 
 ::-webkit-scrollbar {

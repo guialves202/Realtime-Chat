@@ -7,8 +7,26 @@ class Chat {
 
   renderMessage(message) {
     const div = document.createElement('div');
+    const strong = document.createElement('strong');
+    const small = document.createElement('small');
+    const p = document.createElement('p');
+    const date = new Date();
+
+    let hours = date.getHours().toString();
+    let minutes = date.getMinutes().toString();
+
+    hours = hours.length == '1' ? '0' + hours : hours;
+    minutes = minutes.length == '1' ? '0' + minutes : minutes;
+
+    strong.style.color = message.color;
+
+    small.textContent = `${hours}:${minutes}`;
+    strong.textContent = message.username;
+    p.textContent = message.message;
     div.classList.add('messages');
-    div.textContent = message;
+    div.append(strong);
+    div.append(small);
+    div.append(p);
     this.chat.append(div);
     this.chat.scrollTop = this.chat.scrollHeight;
   }
@@ -45,13 +63,15 @@ socket.on('okmessage', (message) => {
   input.classList.remove('danger');
 });
 
-const signIn = document.querySelector('.btn-primary');
+const signIn = document.querySelector('.signin');
 
-signIn.addEventListener('click', () => {
-  const modal = document.querySelector('.blur');
+if (signIn) {
+  signIn.addEventListener('click', () => {
+    const modal = document.querySelector('.blur');
 
-  if (modal.style.display != 'flex') modal.style.display = 'flex';
-});
+    if (modal.style.display != 'flex') modal.style.display = 'flex';
+  });
+}
 
 const closeBtn = document.querySelector('.close');
 

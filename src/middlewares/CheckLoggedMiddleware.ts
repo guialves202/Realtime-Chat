@@ -16,6 +16,14 @@ class CheckLoggedMiddleware {
     }
     next();
   }
+
+  onlyAdmin(req: Request, res: Response, next: NextFunction) {
+    if ((req.session.user && req.session.user.role != 'ADMIN') || !req.session.user) {
+      req.flash('error_msg', 'Only admins can access this area');
+      return res.redirect('/');
+    }
+    next();
+  }
 }
 
 export default new CheckLoggedMiddleware();

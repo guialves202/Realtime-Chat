@@ -1,0 +1,108 @@
+<link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+<script src="/js/dashboard.js" defer></script>
+
+<aside>
+
+    <div class="brand-name">
+        <h1>
+            <a href="/">
+                SpaceChat
+            </a>
+        </h1>
+    </div>
+
+    <div class="menu">
+        <ul>
+            <li>
+                <a href="/dashboard"><i class="las la-home"></i> Dashboard</a>
+            </li>
+
+            <li>
+                <a href="/chat"><i class="las la-comments"></i> Chat</a>
+            </li>
+
+            <li>
+                <form action="/user/logout" method="post">
+                    <button>
+                        <i class="las la-sign-out-alt"></i> Logout
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+
+</aside>
+
+<main>
+
+    <header>
+        <h2>Dashboard</h2>
+
+        <div>
+            <h4>Admin</h4>
+            <small>Last access today</small>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <section class="left">
+            <div class="cards">
+                <div class="card">
+                    <h2>20</h2>
+                    <span>Active users</span>
+                </div>
+    
+                <div class="card">
+                    <h2>5</h2>
+                    <span>Blocked messages</span>
+                </div>
+    
+                <div class="card">
+                    <h2>Feio</h2>
+                    <span>Most blocked word</span>
+                </div>
+            </div>
+
+            <div class="records">
+
+                <div class="records-title">
+                    <h2>Blocked messages</h2>
+                </div>
+
+                <% messagesData.forEach(message => { %>
+                  <div class="record">
+                      <div class="record-message">
+                          <p><%= message.username %>: <%= message.message %></p>
+                          <p><%=message.createdAt.getHours()%>:<%=message.createdAt.getMinutes()%>:<%=message.createdAt.getSeconds()%>  <%=message.createdAt.getDate()%>/<%=message.createdAt.getMonth() + 1%>/<%=message.createdAt.getFullYear()%></p>
+                      </div>
+
+                      <div class="blocked-words">
+                          <p>Blocked words: <%= message.words %></p>
+                      </div>
+                  </div>
+                <% }) %>
+            </div>
+        </section>
+
+        <section class="right">
+            <div class="blocked-content">
+                <h4>List of forbidden contents</h4>
+                <div class="scroll">
+                    <% forbiddenWords.forEach(word => { %>
+                        <p><%= word.word %></p>
+                      <% }) %>
+                </div>
+            </div>
+
+            <div class="add-blocked-content">
+                <h2>Add a new content to be blocked</h2>
+                <form action="/dashboard/forbiddenWords/add" method="post">
+                    <input type="text" name="content" id="content" placeholder="Type a word or phrase..">
+
+                    <button type="submit">Add</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+</main>

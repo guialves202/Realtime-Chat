@@ -11,6 +11,7 @@ import session from 'express-session';
 import homeRoutes from './routes/home';
 import chatRoutes from './routes/chat';
 import userRoutes from './routes/user';
+import dashboardRoutes from './routes/dashboard';
 import http from 'http';
 import { Server } from 'socket.io';
 import GlobalMiddleware from './middlewares/GlobalMiddleware';
@@ -19,6 +20,7 @@ import socketfunction from './config/websocket';
 declare module 'express-session' {
   export interface SessionData {
     user: { id: string; username: string; password: string; role: string };
+    color: string;
   }
 }
 
@@ -77,7 +79,7 @@ class App {
         contentSecurityPolicy: {
           directives: {
             'script-src': ["'self'", 'https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js'],
-            'font-src': ['https://fonts.gstatic.com'],
+            'font-src': ['https://fonts.gstatic.com', 'https://maxst.icons8.com/'],
           },
         },
       }),
@@ -96,6 +98,7 @@ class App {
     this.app.use(homeRoutes);
     this.app.use('/chat', chatRoutes);
     this.app.use('/user', userRoutes);
+    this.app.use('/dashboard', dashboardRoutes);
   }
 }
 

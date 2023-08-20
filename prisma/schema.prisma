@@ -15,7 +15,6 @@ model User {
   username        String          @unique
   password        String
   role            Role            @default(USER)
-  message_records MessageRecord[]
 
   @@map("users")
 }
@@ -23,7 +22,6 @@ model User {
 model ForbiddenWord {
   id                   String              @id @default(uuid())
   word                 String
-  message_word_records MessageWordRecord[]
 
   @@map("forbidden_words")
 }
@@ -31,9 +29,8 @@ model ForbiddenWord {
 model MessageRecord {
   id                  String              @id @default(uuid())
   message             String
-  userId              String
+  username            String
   createdAt           DateTime            @default(now())
-  user                User                @relation(fields: [userId], references: [id])
   message_word_recors MessageWordRecord[]
 
   @@map("message_records")
@@ -42,9 +39,8 @@ model MessageRecord {
 model MessageWordRecord {
   id        String        @id @default(uuid())
   messageId String
-  wordId    String
+  word      String
   message   MessageRecord @relation(fields: [messageId], references: [id])
-  word      ForbiddenWord @relation(fields: [wordId], references: [id])
 
   @@map("message_word_records")
 }

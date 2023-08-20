@@ -18,6 +18,7 @@ class LoginRegisterController {
         data.password = bcrypt.hashSync(data.password, 10);
         const user = await UserRepository.create(data);
         req.session.user = user;
+        req.session.color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
         req.flash('success_msg', 'Account created successfully, you can start chating now');
         return res.redirect('/chat');
       } catch (err) {
@@ -32,11 +33,18 @@ class LoginRegisterController {
       }
 
       req.session.user = user;
+      req.session.color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
       req.flash('success_msg', `Welcome back ${user.username}!`);
       return res.redirect('/chat');
     } catch (err) {
       return res.redirect('/404');
     }
+  }
+
+  logout(req: Request, res: Response) {
+    req.session.destroy((err) => {
+      return res.redirect('/chat');
+    });
   }
 }
 

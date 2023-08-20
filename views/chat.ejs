@@ -8,7 +8,17 @@
         </div>
 
         <div>
-            <button class="btn btn-primary">Sign In</button>
+            <% if (user) { %>
+                <% if (user.role == 'ADMIN') { %>
+                    <a href="/dashboard" class="btn-primary">Dashboard</a>
+                <% } %>
+                <form action="/user/logout" method="post">
+                    <button class="btn btn-primary">Logout</button>
+                </form>
+            <% } else { %>
+                <button class="btn btn-primary signin">Sign In</button>
+            <% } %>
+            
         </div>
     </header>
 
