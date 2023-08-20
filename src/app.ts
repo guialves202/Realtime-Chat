@@ -10,6 +10,8 @@ import { Request, Response } from 'express';
 import session from 'express-session';
 import homeRoutes from './routes/home';
 import chatRoutes from './routes/chat';
+import http from 'http';
+import { Server } from 'socket.io';
 
 declare module 'express-session' {
   export interface SessionData {
@@ -19,8 +21,12 @@ declare module 'express-session' {
 
 class App {
   app: Express;
+  io: Server;
+  server: http.Server;
   constructor() {
     this.app = express();
+    this.server = http.createServer(this.app);
+    this.io = new Server(this.server);
     this.config();
     this.middlewares();
     this.routes();
@@ -42,10 +48,26 @@ class App {
         },
       }),
     );
+    this.io.on('connection', (socket) => {
+      console.log(socket.id);
+
+      socket.on('sendMessage', (data) => {
+        if (data) socket.broadcast.emit('receivedMessage', data);
+      });
+    });
   }
 
   middlewares() {
-    this.app.use(helmet());
+    this.app.use(
+      helmet({
+        contentSecurityPolicy: {
+          directives: {
+            'script-src': ["'self'", 'https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js'],
+            'font-src': ['https://fonts.gstatic.com'],
+          },
+        },
+      }),
+    );
     this.app.use(cors());
     this.app.use(flash());
     this.app.use(express.urlencoded({ extended: true }));
@@ -61,4 +83,8 @@ class App {
   }
 }
 
-export default new App().app;
+const myApp = new App();
+const app = myApp.app;
+const server = myApp.server;
+
+export { app, server };

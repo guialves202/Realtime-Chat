@@ -1,3 +1,5 @@
+
+<script src="/js/chat.js" defer></script>
 <div class="container">
 
     <header>
@@ -6,7 +8,7 @@
         </div>
 
         <div>
-            <a href="/chat" class="btn btn-primary">Sign In</a>
+            <button class="btn btn-primary">Sign In</button>
         </div>
     </header>
 
@@ -16,11 +18,36 @@
         </div>
 
         <div class="send-message">
-            <form action="">
-                <input type="text" name="message" id="message">
+            <form id="send-message-form">
+                <input type="text" name="message" id="message" autocomplete="off" autocapitalize="off" placeholder="Send a message...">
                 <button type="submit">Send</button>
             </form>
         </div>
     </main>
 
+</div>
+
+<section class="wrapper">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
+</section>
+
+<div class="blur">
+    <div class="boxModal">
+        <span class="close">x</span>
+
+        <div class="modal-content">
+            <h1>Sign in or create an account</h1>
+            <form action="/user/login" id="user-form">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username">
+
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
 </div>
