@@ -11,32 +11,42 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
-  username String
-  password String
-  role Role @default(USER)
-  word_records WordRecord[]
+  id              String          @id @default(uuid())
+  username        String          @unique
+  password        String
+  role            Role            @default(USER)
+  message_records MessageRecord[]
 
   @@map("users")
 }
 
 model ForbiddenWord {
-  id String @id @default(uuid())
-  word String
-  word_records WordRecord[]
+  id                   String              @id @default(uuid())
+  word                 String
+  message_word_records MessageWordRecord[]
 
-  @@map("forbiddenWords")
+  @@map("forbidden_words")
 }
 
-model WordRecord {
-  id String @id @default(uuid())
-  word String
-  userId String
-  createdAt DateTime @default(now())
-  user User @relation(fields: [userId], references: [id])
-  forbiddenWord ForbiddenWord @relation(fields: [word], references: [id])
+model MessageRecord {
+  id                  String              @id @default(uuid())
+  message             String
+  userId              String
+  createdAt           DateTime            @default(now())
+  user                User                @relation(fields: [userId], references: [id])
+  message_word_recors MessageWordRecord[]
 
-  @@map("wordRecords")
+  @@map("message_records")
+}
+
+model MessageWordRecord {
+  id        String        @id @default(uuid())
+  messageId String
+  wordId    String
+  message   MessageRecord @relation(fields: [messageId], references: [id])
+  word      ForbiddenWord @relation(fields: [wordId], references: [id])
+
+  @@map("message_word_records")
 }
 
 enum Role {

@@ -1,0 +1,21 @@
+<% if (error_msg.length > 0) { %>
+  <div class="alert-msg-div">
+      <% error_msg.forEach(erro => { %>
+          <div class="alert-msg error">
+              <span class="closebtn">&times</span>
+              <%= erro %><br>
+          </div>
+      <% }); %>
+  </div>
+<% } %>
+
+<% if (success_msg.length > 0) { %>
+  <div class="alert-msg-div">
+      <% success_msg.forEach(success => { %>
+          <div class="alert-msg success">
+              <span class="closebtn">&times</span>
+              <%= success %><br>
+          </div>
+      <% }); %>
+  </div>
+<% } %>

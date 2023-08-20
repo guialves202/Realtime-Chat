@@ -1,0 +1,42 @@
+.alert-msg {
+  padding: 20px;
+  border-radius: 20px;
+  transition: opacity .6s;
+  color: white;
+}
+
+.error {
+  background-color: #f44336;
+}
+
+.success {
+  background-color: #04AA6D;
+}
+
+.alert-msg-div {
+  position: fixed;
+  width: 80%;
+  top: 1.5rem;
+  left: calc((100% - 80%) / 2);
+  z-index: 9999;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(1fr);
+  gap: 1rem;
+  transition: opacity 2s;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+  
+.closebtn:hover {
+  color: black;
+}
