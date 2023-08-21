@@ -6,6 +6,15 @@ class ForbiddenWordsRepository {
     return words;
   }
 
+  async findOne(id: string) {
+    const word = await prisma.forbiddenWord.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    return word;
+  }
+
   async createOne(word: string) {
     await prisma.forbiddenWord.create({
       data: {
@@ -18,6 +27,14 @@ class ForbiddenWordsRepository {
     const words = [...wordsArray];
     await prisma.forbiddenWord.createMany({
       data: [...words],
+    });
+  }
+
+  async deleteOne(id: string) {
+    await prisma.forbiddenWord.delete({
+      where: {
+        id: id,
+      },
     });
   }
 }

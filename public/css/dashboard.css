@@ -46,7 +46,7 @@ aside {
 }
 
 .menu ul li a {
-    color: rgb(220, 220, 220);
+    color: rgb(230, 230, 230);
     font-size: 1.5rem;
 }
 
@@ -57,7 +57,7 @@ aside {
 .menu ul li button {
   background: none;
   border: none;
-  color: rgb(220, 220, 220);
+  color: rgb(230, 230, 230);
   font-size: 1.5rem;
   cursor: pointer;
 }
@@ -72,7 +72,7 @@ main {
     margin-left: 20%;
     display: flex;
     flex-direction: column;
-    row-gap: 2rem;
+    row-gap: 1rem;
 }
 
 header {
@@ -127,7 +127,7 @@ header {
     display: flex;
     flex-direction: column;
     row-gap: .5rem;
-    max-height: 70%;
+    max-height: 70vh;
 }
 
 .records-title {
@@ -194,12 +194,38 @@ header {
     max-height: 90%;
 }
 
-.scroll p {
+.delete-word-form {
     background-color: #2e455c;
     color: white;
     width: 100%;
     border-radius: 5px;
-    padding: 5px 10px;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    transition: filter .3s ease;
+}
+
+.delete-word-form button {
+  background: none;
+  border: none;
+  display: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.delete-word-form:hover {
+  filter: brightness(85%);
+}
+
+.delete-word-form:hover > button {
+  display: inherit;
+}
+
+.delete-word-form button:hover {
+  color: red;
 }
 
 .scroll::-webkit-scrollbar, .records::-webkit-scrollbar {

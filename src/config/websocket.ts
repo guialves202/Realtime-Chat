@@ -22,8 +22,10 @@ export default function (defaultSocket: Socket) {
     const words = data.split(' ');
 
     const filteredWords = filter.filterWords(words);
+    const filteredPhrases = filter.filterPhrases(data);
 
-    if (filteredWords.length > 0) {
+    if ((filteredWords.length > 0 || filteredPhrases.length > 0) && session.user.role != 'ADMIN') {
+      filteredWords.push(...filteredPhrases);
       await MessageRecordsRepository.create({ username: session.user.username, message: data, wordArray: filteredWords });
       return socket.emit('forbiddenWord');
     }

@@ -41,6 +41,16 @@ class MessageRecordsRepository {
       data: [...wordsInsertData],
     });
   }
+
+  async mostBlockedWord() {
+    const words = await prisma.messageWordRecord.groupBy({
+      by: ['word'],
+      _count: {
+        _all: true,
+      },
+    });
+    return words;
+  }
 }
 
 export default new MessageRecordsRepository();

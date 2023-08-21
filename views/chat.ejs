@@ -13,6 +13,7 @@
                     <a href="/dashboard" class="btn-primary">Dashboard</a>
                 <% } %>
                 <form action="/user/logout" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <button class="btn btn-primary">Logout</button>
                 </form>
             <% } else { %>
@@ -29,6 +30,7 @@
 
         <div class="send-message">
             <form id="send-message-form">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <input type="text" name="message" id="message" autocomplete="off" autocapitalize="off" placeholder="Send a message...">
                 <button type="submit">Send</button>
             </form>
@@ -50,6 +52,7 @@
         <div class="modal-content">
             <h1>Sign in or create an account</h1>
             <form action="/user/login" method="post" id="user-form">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <label for="username">Username</label>
                 <input type="text" name="username" id="username" required>
 

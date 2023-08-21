@@ -30,6 +30,40 @@ class UserRepository {
     });
     return user;
   }
+
+  async addActiveUser(userId: string) {
+    const user = await this.findOneActiveUser(userId);
+    if (user) await this.removeActiveUser(userId);
+    await prisma.activeUsers.create({
+      data: {
+        userId: userId,
+      },
+    });
+  }
+
+  async removeActiveUser(userId: string) {
+    const user = await this.findOneActiveUser(userId);
+    if (!user) return;
+    await prisma.activeUsers.delete({
+      where: {
+        userId: userId,
+      },
+    });
+  }
+
+  async findAllActiveUsers() {
+    const users = await prisma.activeUsers.findMany();
+    return users.length;
+  }
+
+  async findOneActiveUser(userId: string) {
+    const user = await prisma.activeUsers.findUnique({
+      where: {
+        userId: userId,
+      },
+    });
+    return user;
+  }
 }
 
 export default new UserRepository();

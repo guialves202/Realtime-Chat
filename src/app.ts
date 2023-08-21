@@ -16,11 +16,14 @@ import http from 'http';
 import { Server } from 'socket.io';
 import GlobalMiddleware from './middlewares/GlobalMiddleware';
 import socketfunction from './config/websocket';
+import csrf from 'csurf';
+import CsrfMiddleware from './middlewares/CsrfMiddleware';
 
 declare module 'express-session' {
   export interface SessionData {
     user: { id: string; username: string; password: string; role: string };
     color: string;
+    activeUsers: number;
   }
 }
 
@@ -88,6 +91,9 @@ class App {
     this.app.use(flash());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
+    this.app.use(csrf());
+    this.app.use(CsrfMiddleware.checkCsrfError);
+    this.app.use(CsrfMiddleware.csrfMiddleware);
     this.app.use(GlobalMiddleware.localVariables);
   }
 
@@ -105,5 +111,6 @@ class App {
 const myApp = new App();
 const app = myApp.app;
 const server = myApp.server;
+const io = myApp.io;
 
-export { app, server };
+export { app, server, io };

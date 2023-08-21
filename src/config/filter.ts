@@ -15,7 +15,15 @@ class Filter {
     return messageForbiddenWords;
   }
 
-  filterPhrases() {}
+  filterPhrases(phrase: string) {
+    const messageForbiddenPhrases: { id: string; word: string }[] = [];
+    this.forbiddenWords.map((word) => {
+      if (word.word.includes(' ')) {
+        if (phrase.includes(word.word)) messageForbiddenPhrases.push(word);
+      }
+    });
+    return messageForbiddenPhrases;
+  }
 }
 
 export default (forbiddenWords: { id: string; word: string }[]) => {

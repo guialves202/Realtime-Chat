@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import UserRepository from '../repositories/UserRepository';
 import bcrypt from 'bcryptjs';
+import { io } from '../app';
 
 class LoginRegisterController {
   async login(req: Request, res: Response) {
@@ -20,6 +21,9 @@ class LoginRegisterController {
         req.session.user = user;
         req.session.color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
         req.flash('success_msg', 'Account created successfully, you can start chating now');
+        const activeUsers = await UserRepository.findAllActiveUsers();
+        io.sockets.emit('updateUserCount', activeUsers);
+        await UserRepository.addActiveUser(user.id);
         return res.redirect('/chat');
       } catch (err) {
         return res.redirect('/404');
@@ -35,15 +39,26 @@ class LoginRegisterController {
       req.session.user = user;
       req.session.color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
       req.flash('success_msg', `Welcome back ${user.username}!`);
+      await UserRepository.addActiveUser(user.id);
+      const activeUsers = await UserRepository.findAllActiveUsers();
+      io.sockets.emit('updateUserCount', activeUsers);
       return res.redirect('/chat');
     } catch (err) {
       return res.redirect('/404');
     }
   }
 
-  logout(req: Request, res: Response) {
-    req.session.destroy((err) => {
-      return res.redirect('/chat');
+  async logout(req: Request, res: Response) {
+    const user = req.session.user;
+    req.session.destroy(async () => {
+      try {
+        if (user) await UserRepository.removeActiveUser(user.id);
+        const activeUsers = await UserRepository.findAllActiveUsers();
+        io.sockets.emit('updateUserCount', activeUsers);
+        return res.redirect('/chat');
+      } catch (err) {
+        return res.redirect('/404');
+      }
     });
   }
 }
