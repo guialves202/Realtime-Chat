@@ -12,6 +12,7 @@ class UserRepository {
   }
 
   async create(userData: { username: string; password: string }) {
+    // Create an admin account if the username is 'admin'
     if (userData.username == 'admin') {
       const user = await prisma.user.create({
         data: {
@@ -22,6 +23,8 @@ class UserRepository {
       });
       return user;
     }
+
+    // Create normal accounts
     const user = await prisma.user.create({
       data: {
         username: userData.username,
@@ -32,8 +35,10 @@ class UserRepository {
   }
 
   async addActiveUser(userId: string) {
+    // Check if this user is already saved as active in database
     const user = await this.findOneActiveUser(userId);
-    if (user) await this.removeActiveUser(userId);
+    if (user) return;
+
     await prisma.activeUsers.create({
       data: {
         userId: userId,
@@ -42,8 +47,10 @@ class UserRepository {
   }
 
   async removeActiveUser(userId: string) {
+    // Check if active users table contain this user before remove it
     const user = await this.findOneActiveUser(userId);
     if (!user) return;
+
     await prisma.activeUsers.delete({
       where: {
         userId: userId,

@@ -1,5 +1,6 @@
 const alertMsg = document.querySelector('.alert-msg-div');
 
+// If there is some alert message, set a timeout for it to disappear
 if (alertMsg) {
   setTimeout(() => {
     alertMsg.style.opacity = '0';
@@ -8,6 +9,7 @@ if (alertMsg) {
     }, 2000);
   }, 3500);
 
+  // Define the button to close the message
   const alertCloseBtn = document.querySelectorAll('.closebtn');
   alertCloseBtn.forEach((element) => {
     element.addEventListener('click', (event) => {

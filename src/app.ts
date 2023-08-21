@@ -18,6 +18,9 @@ import GlobalMiddleware from './middlewares/GlobalMiddleware';
 import socketfunction from './config/websocket';
 import csrf from 'csurf';
 import CsrfMiddleware from './middlewares/CsrfMiddleware';
+import type { IncomingMessage } from 'http';
+import type { SessionData } from 'express-session';
+import type { Socket } from 'socket.io';
 
 declare module 'express-session' {
   export interface SessionData {
@@ -26,10 +29,6 @@ declare module 'express-session' {
     activeUsers: number;
   }
 }
-
-import type { IncomingMessage } from 'http';
-import type { SessionData } from 'express-session';
-import type { Socket } from 'socket.io';
 
 interface SessionIncomingMessage extends IncomingMessage {
   session: SessionData;
@@ -67,12 +66,10 @@ class App {
         httpOnly: true,
       },
     };
-
     const expressSession = session(sessionData);
 
     this.app.use(expressSession);
     this.io.engine.use(expressSession);
-
     this.io.on('connection', socketfunction);
   }
 
