@@ -46,7 +46,7 @@ class DashboardController {
     const content: string = res.locals.content;
 
     try {
-      await ForbiddenWordsRepository.createOne(content);
+      await ForbiddenWordsRepository.createOne(content.toLowerCase());
       req.flash('success_msg', 'Successfully added new forbidden content!');
       return res.redirect('/dashboard');
     } catch (err) {

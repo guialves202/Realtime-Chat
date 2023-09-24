@@ -11,6 +11,7 @@ class Filter {
 
     // Compare each word of the message and see if it is forbidden
     words.map((word) => {
+      word = this.cleanWord(word);
       this.forbiddenWords.map((forbiddenWord) => {
         if (forbiddenWord.word === word) messageForbiddenWords.push(forbiddenWord);
       });
@@ -24,14 +25,27 @@ class Filter {
     const messageForbiddenPhrases: { id: string; word: string }[] = [];
 
     // Search for forbidden phrases in the message
-    this.forbiddenWords.map((word) => {
-      if (word.word.includes(' ')) {
-        if (phrase.includes(word.word)) messageForbiddenPhrases.push(word);
+    this.forbiddenWords.map((forbiddenWord) => {
+      forbiddenWord.word = this.cleanWord(forbiddenWord.word);
+      if (forbiddenWord.word.includes(' ')) {
+        if (phrase.includes(forbiddenWord.word)) messageForbiddenPhrases.push(forbiddenWord);
       }
     });
 
     // Return the forbidden phrases found in the message
     return messageForbiddenPhrases;
+  }
+
+  cleanWord(word: string) {
+    word = word.trim().toLowerCase().replace('.', '');
+    word = word.replace('3', 'e');
+    word = word.replace('0', 'o');
+    word = word.replace('4', 'a');
+    word = word.replace('1', 'i');
+    word = word.replace('@', 'a');
+    word = word.replace('&', 'e');
+
+    return word;
   }
 }
 
